@@ -72,6 +72,13 @@ module.exports = function (grunt) {
                     port: 35732
                 }
             }
+        },
+
+        "gh-pages": {
+            options: {
+                base: "public/"
+            },
+            src: ['**']
         }
     });
 
@@ -81,6 +88,14 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-gh-pages');
+
+    grunt.registerTask('deploy-gh', [
+        'webpack',
+        'sass',
+        'uglify',
+        'gh-pages'
+    ]);
 
     grunt.registerTask('default', [
         'sass',
