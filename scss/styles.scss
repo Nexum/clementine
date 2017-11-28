@@ -1,0 +1,51 @@
+.images {
+  display: flex;
+  flex-direction: row-reverse;
+  flex-wrap: wrap-reverse;
+  width: 100%;
+
+  .cell {
+    display: flex;
+    height: auto;
+    width: auto;
+    flex: 0 33%;
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
+
+    &.new {
+      font-weight: bold;
+      background-color: grey;
+      min-height: 50px;
+    }
+
+    &.empty {
+
+    }
+  }
+}
+
+.clementine {
+  background-color: #000;
+  width: 100%;
+  height: auto;
+  min-height: 300px;
+}
+
+.overlay {
+  background-color: #0a0a0a;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: 10000;
+  top: 0;
+  left: 0;
+  display: none;
+
+  .game {
+    border: 1px dashed #fafafa;
+    margin: 20px;
+  }
+}
