@@ -12,6 +12,7 @@ var lastImage;
 var start;
 var end;
 var gameInstance = null;
+var clementineContainer = jQuery("#clementine");
 var imagesContainer = jQuery("#images");
 var gameContainer = jQuery("#game");
 var overlayContainer = jQuery(".overlay");
@@ -169,12 +170,16 @@ function addTile() {
             return;
         }
 
+        imagesContainer.hide();
+        clementineContainer.hide();
         overlayContainer.show();
         gameInstance = new CanvasGame(size, {
             x: start.x,
             y: start.y
         }, end, "game", function (lastPixel, image) {
             gameInstance.destroy();
+            imagesContainer.show();
+            clementineContainer.show();
             overlayContainer.hide();
             let newImage = {
                 pixel: lastPixel,
