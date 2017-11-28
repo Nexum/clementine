@@ -38,6 +38,7 @@ module.exports = class CanvasGame {
         this.paintData = [];
         this.backgroundColor = "#ffffff";
         this.endColor = "#ffa739";
+        this.resetTimeout = null;
         this.startColor = "#000000";
         this.paintColor = "#000000";
         this.paintTimeout = null;
@@ -81,12 +82,24 @@ module.exports = class CanvasGame {
                 this.painting = true;
                 this.pointerOffsetX = this.start.x - x;
                 this.pointerOffsetY = this.start.y - y;
+            } else {
+                let lastPaint = this.paintData[this.paintData.length - 1];
+                console.log(lastPaint, this.resetTimeout);
+                if (lastPaint && this.resetTimeout) {
+                    this.pointerOffsetX = lastPaint[0] - x;
+                    this.pointerOffsetY = lastPaint[1] - y;
+                }
+            }
+
+            if (this.resetTimeout) {
+                clearTimeout(this.resetTimeout);
+                this.resetTimeout = null;
             }
 
             let realX = x + this.pointerOffsetX;
             let realY = y + this.pointerOffsetY;
 
-            if (realX > this.size || realY > this.size) {
+            if (realX < 0 || realX > this.size || realY > this.size || realY < 0) {
                 this._resetPaint();
                 return;
             }
@@ -106,7 +119,15 @@ module.exports = class CanvasGame {
                 this.finished = true;
             }
         } else {
-            this._resetPaint();
+            if (this.resetTimeout) {
+                clearTimeout(this.resetTimeout);
+                this.resetTimeout = null;
+            }
+
+            this.resetTimeout = setTimeout(() => {
+                this.resetTimeout = null;
+                this._resetPaint();
+            }, 5000);
         }
     }
 
@@ -221,7 +242,16 @@ module.exports = class CanvasGame {
         this.game.input.addPointer();
         this.game.input.maxPointers = 1;
         this.game.input.addMoveCallback(this.onMove, this);
-        this.game.input.onUp.add(this._resetPaint, this);
+        this.game.input.onUp.add(() => {
+            if (this.resetTimeout) {
+                clearTimeout(this.resetTimeout);
+                this.resetTimeout = null;
+            }
+            this.resetTimeout = setTimeout(() => {
+                this.resetTimeout = null;
+                this._resetPaint();
+            }, 5000);
+        }, this);
     }
 
     _update() {

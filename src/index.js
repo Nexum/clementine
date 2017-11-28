@@ -3,7 +3,7 @@ const CanvasGame = require("lib/canvasgame");
 const MY_ID = require("uuid/v1")();
 
 var debug = location.hostname === "localhost";
-debug = false;
+//debug = false;
 var blockInterval;
 var host = "https://weihnachten2017.vonaffenfels.de";
 var images = [];
@@ -233,9 +233,9 @@ function getBlock(index) {
             clearTimeout(blockInterval);
         }
 
-        blockInterval = setTimeout(function () {
-            getBlock(index)
-        }, 2000);
+        if (debug) {
+            return resolve(true);
+        }
 
         jQuery.ajax({
             contentType: 'application/json',
@@ -245,6 +245,9 @@ function getBlock(index) {
             }),
             success: function (data) {
                 return refreshImages().then(() => {
+                    blockInterval = setTimeout(function () {
+                        getBlock(index)
+                    }, 2000);
                     return resolve(true);
                 });
             },
