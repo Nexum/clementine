@@ -29,6 +29,8 @@ module.exports = class CanvasGame {
             start.y = size - 2;
         }
 
+        this.pointerOffsetX = 0;
+        this.pointerOffsetY = 0;
         this.start = start;
         this.end = end;
         this.size = size;
@@ -61,8 +63,9 @@ module.exports = class CanvasGame {
         bitmap.rect(x, y, width, width * 2, color);
     }
 
-    isNear(pos, target) {
-        return Math.abs(pos - target) <= 2;
+    isNear(pos, target, precision) {
+        precision = precision || 2;
+        return Math.abs(pos - target) <= precision;
     }
 
     onMove(pointer, x, y) {
@@ -73,20 +76,30 @@ module.exports = class CanvasGame {
             return;
         }
 
-        if (pointer.isDown && pointer.withinGame) {
-            if (!this.painting && this.isNear(this.start.x, x) && this.isNear(this.start.y, y)) {
+        if (pointer.isDown) {
+            if (!this.painting) {
                 this.painting = true;
+                this.pointerOffsetX = this.start.x - x;
+                this.pointerOffsetY = this.start.y - y;
+            }
+
+            let realX = x + this.pointerOffsetX;
+            let realY = y + this.pointerOffsetY;
+
+            if (realX > this.size || realY > this.size) {
+                this._resetPaint();
+                return;
             }
 
             if (this.painting) {
                 this.paintData.push([
-                    x,
-                    y
+                    realX,
+                    realY
                 ]);
-                this.paint(x, y);
+                this.paint(realX, realY);
             }
 
-            if (this._isEnd(x, y) && this.painting) {
+            if (this._isEnd(realX, realY) && this.painting) {
                 if (this.finishCb) {
                     this.finishCb(this.paintData.pop(), this.bitmap.baseTexture.source.toDataURL());
                 }

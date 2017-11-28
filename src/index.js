@@ -2,6 +2,7 @@ const jQuery = require("jquery");
 const CanvasGame = require("lib/canvasgame");
 const MY_ID = require("uuid/v1")();
 
+var debug = false;
 var blockInterval;
 var host = "https://weihnachten2017.vonaffenfels.de";
 var images = [];
@@ -162,7 +163,7 @@ function refreshImages() {
 function addTile() {
     getBlock(images.length).then((result) => {
 
-        if (!result) {
+        if (!result && !debug) {
             return;
         }
 
@@ -177,7 +178,9 @@ function addTile() {
                 pixel: lastPixel,
                 image: image
             };
-            saveNewImage(newImage);
+            if (!debug) {
+                saveNewImage(newImage);
+            }
 
             images.push(newImage);
             setLastImage(images[images.length - 1], images.length - 1);
