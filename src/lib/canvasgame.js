@@ -219,6 +219,7 @@ module.exports = class CanvasGame {
 
         this._resetPaint();
         this.game.input.addPointer();
+        this.game.input.maxPointers = 1;
         this.game.input.addMoveCallback(this.onMove, this);
         this.game.input.onUp.add(this._resetPaint, this);
     }
