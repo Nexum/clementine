@@ -2,7 +2,8 @@ const jQuery = require("jquery");
 const CanvasGame = require("lib/canvasgame");
 const MY_ID = require("uuid/v1")();
 
-var debug = false;
+var debug = location.hostname === "localhost";
+debug = false;
 var blockInterval;
 var host = "https://weihnachten2017.vonaffenfels.de";
 var images = [];
@@ -14,6 +15,7 @@ var gameInstance = null;
 var imagesContainer = jQuery("#images");
 var gameContainer = jQuery("#game");
 var overlayContainer = jQuery(".overlay");
+var blockedMessage = jQuery("#blockedmessage");
 
 function setLastImage(image, lastIndex) {
     lastImage = image;
@@ -126,7 +128,7 @@ function reDrawImages() {
             if (firstEmpty) {
                 firstEmpty = false;
                 imageString += `
-                    <div class="cell new" onclick="addTile()" style="order: ${order};">+</div>
+                    <div class="cell new" onclick="addTile()" style="order: ${order};"><span>+</span></div>
                 `;
             } else {
                 imageString += `
@@ -189,6 +191,13 @@ function addTile() {
     });
 }
 
+function showBlockedMessage() {
+    blockedMessage.fadeIn();
+    setTimeout(function () {
+        blockedMessage.fadeOut();
+    }, 2000);
+}
+
 function saveNewImage(image) {
     return new Promise((resolve, reject) => {
         jQuery.ajax({
@@ -235,6 +244,7 @@ function getBlock(index) {
                 });
             },
             error: function () {
+                showBlockedMessage();
                 return refreshImages().then(() => {
                     if (blockInterval) {
                         clearTimeout(blockInterval);

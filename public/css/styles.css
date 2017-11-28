@@ -1,12 +1,18 @@
+html, body { padding: 0; margin: 0; font-family: Arial; }
+
 .images { display: flex; flex-direction: row-reverse; flex-wrap: wrap-reverse; width: 100%; }
 
 .images .cell { display: flex; height: auto; width: auto; flex: 0 33%; }
 
 .images .cell img { width: 100%; height: 100%; }
 
-.images .cell.new { font-weight: bold; background-color: grey; min-height: 50px; }
+.images .cell.new { font-weight: bold; background-color: #000; color: white; font-size: 50px; text-align: center; vertical-align: middle; min-height: 50px; }
+
+.images .cell.new span { width: 100%; height: 100%; vertical-align: middle; text-align: center; margin-top: 20%; }
 
 .clementine { background-color: #000; width: 100%; height: auto; min-height: 300px; }
+
+.blockedmessage { display: none; position: fixed; color: #ff4c4c; top: 0; left: 0; font-weight: bold; padding: 30px; background: #000; }
 
 .overlay { background-color: #0a0a0a; width: 100%; height: 100%; position: fixed; z-index: 10000; top: 0; left: 0; display: none; }
 
