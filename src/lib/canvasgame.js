@@ -84,7 +84,6 @@ module.exports = class CanvasGame {
                 this.pointerOffsetY = this.start.y - y;
             } else {
                 let lastPaint = this.paintData[this.paintData.length - 1];
-                console.log(lastPaint, this.resetTimeout);
                 if (lastPaint && this.resetTimeout) {
                     this.pointerOffsetX = lastPaint[0] - x;
                     this.pointerOffsetY = lastPaint[1] - y;
@@ -99,7 +98,7 @@ module.exports = class CanvasGame {
             let realX = x + this.pointerOffsetX;
             let realY = y + this.pointerOffsetY;
 
-            if (realX < 0 || realX > this.size || realY > this.size || realY < 0) {
+            if (realX < -1 || realX > this.size || realY > this.size || realY < -1) {
                 this._resetPaint();
                 return;
             }
