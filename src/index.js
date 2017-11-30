@@ -228,7 +228,7 @@ function editTile(editIndex) {
         overlayContainer.hide();
         let newImage = {
             pixel: lastPixel,
-            user: user,
+            user: user._id,
             index: editIndex,
             image: image
         };
