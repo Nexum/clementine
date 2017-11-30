@@ -290,7 +290,8 @@ module.exports = g;
 var jQuery = __webpack_require__(3);
 var CanvasGame = __webpack_require__(4);
 var MY_ID = __webpack_require__(8)();
-var Api = new (__webpack_require__(11))();
+var apiClass = __webpack_require__(11);
+var Api = new apiClass();
 Api.init(window, "Clementines Extension");
 
 var debug = location.hostname === "localhost";
