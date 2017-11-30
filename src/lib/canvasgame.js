@@ -14,19 +14,19 @@ window.Phaser = require('phaser/build/custom/phaser-split');
 module.exports = class CanvasGame {
 
     constructor(size, start, end, id, finishCb) {
-        if (this.isNear(start.x - 2, 0)) {
+        if (start.x < 0) {
             start.x = 0;
         }
-        if (this.isNear(start.x + 2, size)) {
-            start.x = size - 2;
+        if (start.x >= size) {
+            start.x = size - 1;
         }
 
-        if (this.isNear(start.y - 2, 0)) {
+        if (start.y < 0) {
             start.y = 0;
         }
 
-        if (this.isNear(start.y + 2, size)) {
-            start.y = size - 2;
+        if (start.y >= this.size) {
+            start.y = size - 1;
         }
 
         this.pointerOffsetX = 0;
@@ -37,9 +37,9 @@ module.exports = class CanvasGame {
         this.finishCb = finishCb;
         this.paintData = [];
         this.backgroundColor = "#ffffff";
-        this.endColor = "#ffa739";
+        this.endColor = "#ffd700";
         this.resetTimeout = null;
-        this.startColor = "#000000";
+        this.startColor = "#00FF00";
         this.paintColor = "#000000";
         this.paintTimeout = null;
         this.finished = false;
@@ -98,9 +98,20 @@ module.exports = class CanvasGame {
             let realX = x + this.pointerOffsetX;
             let realY = y + this.pointerOffsetY;
 
-            if (realX < -1 || realX > this.size || realY > this.size || realY < -1) {
-                this._resetPaint();
-                return;
+            if (realX < 0) {
+                realX = 0;
+            }
+
+            if (realY < 0) {
+                realY = 0;
+            }
+
+            if (realX > this.size) {
+                realX = this.size - 1;
+            }
+
+            if (realY > this.size) {
+                realY = this.size - 1;
             }
 
             if (this.painting) {
