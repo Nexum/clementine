@@ -11,7 +11,7 @@ var user = null;
 var isVa = null;
 Api.getUser().then((data) => {
     user = data;
-    isVa = data;
+    isVa = data.isVa;
 }, (err) => {
     if (debug) {
         user = {
