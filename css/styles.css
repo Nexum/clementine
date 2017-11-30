@@ -1,6 +1,6 @@
 @font-face { font-family: "OCRB"; src: url("../font/OCRB.ttf"); src: url("../font/OCRB.ttf") format("truetype"); }
 
-html, body { padding: 0; margin: 0; font-family: "OCRB"; }
+html, body { padding: 0; margin: 0; color: white; font-family: "OCRB"; }
 
 .scrollcontainer { overflow: scroll; height: 100%; width: 100%; position: fixed; top: 0; left: 0; }
 
@@ -22,6 +22,8 @@ html, body { padding: 0; margin: 0; font-family: "OCRB"; }
 
 .overlay { background-color: #0a0a0a; width: 100%; height: 100%; position: fixed; z-index: 10000; top: 0; left: 0; display: none; }
 
-.overlay .game { border: 1px dashed #fafafa; margin: 20px; }
+.overlay .info { color: white; margin: 20px; }
+
+.overlay .game { border: none; margin: 20px; }
 
 /*# sourceMappingURL=styles.css.map */
