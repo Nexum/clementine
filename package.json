@@ -25,6 +25,7 @@
         "phaser": "^2.6.2",
         "pixi.js": "^4.6.1",
         "uuid": "^3.1.0",
+        "adventskalender-js-api": "git+https://github.ape/vonAffenfels/adventskalender-js-api.git",
         "webpack": "^3.8.1",
         "webpack-dev-server": "^2.9.4"
     },

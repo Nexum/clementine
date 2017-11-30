@@ -25,8 +25,26 @@ module.exports = class CanvasGame {
             start.y = 0;
         }
 
-        if (start.y >= this.size) {
-            start.y = size - 1;
+        this.isPointEnd = typeof end === "object";
+
+        if (this.isPointEnd) {
+            if (end.y >= this.size) {
+                end.y = size - 1;
+            }
+            if (end.x < 0) {
+                end.x = 0;
+            }
+            if (end.x >= size) {
+                end.x = size - 1;
+            }
+
+            if (end.y < 0) {
+                end.y = 0;
+            }
+
+            if (end.y >= this.size) {
+                end.y = size - 1;
+            }
         }
 
         this.pointerOffsetX = 0;
@@ -162,77 +180,86 @@ module.exports = class CanvasGame {
         this.paint(this.start.x, this.start.y, this.startColor, this.bitmapBackground);
     }
 
+    _paintEnd() {
+        if (this.isPointEnd) {
+            this.paint(this.end.x, this.end.y, this.endColor, this.bitmapBackground, 4);
+        } else {
+            switch (this.end) {
+                case "top":
+                    for (let i = 0; i < this.size; i++) {
+                        this.paint(i, 0, this.endColor, this.bitmapBackground, 4);
+                    }
+                    break;
+                case "left":
+                    for (let i = 0; i < this.size; i++) {
+                        this.paint(0, i, this.endColor, this.bitmapBackground, 4);
+                    }
+                    break;
+                case "right":
+                    for (let i = 0; i < this.size; i++) {
+                        this.paint(this.size - 4, i, this.endColor, this.bitmapBackground, 4);
+                    }
+                    break;
+                case "bottom":
+                    for (let i = 0; i < this.size; i++) {
+                        this.paint(i, this.size - 4, this.endColor, this.bitmapBackground, 4);
+                    }
+                    break;
+            }
+        }
+    }
+
     _isEnd(x, y) {
-        switch (this.end) {
-            case "top":
-                if (this.isNear(y, 0)) {
-                    if (y > 0) {
-                        for (let i = y; i >= 0; i--) {
-                            console.log(x, i);
-                            this.paint(x, i);
+        if (this.isPointEnd) {
+            if (this.isNear(x, this.end.x, 2) && this.isNear(y, this.end.y, 2)) {
+                return true;
+            }
+        } else {
+            switch (this.end) {
+                case "top":
+                    if (this.isNear(y, 0)) {
+                        if (y > 0) {
+                            for (let i = y; i >= 0; i--) {
+                                this.paint(x, i);
+                            }
                         }
+                        return true;
                     }
-                    return true;
-                }
-                break;
-            case "left":
-                if (this.isNear(x, 0)) {
-                    if (x > 0) {
-                        for (let i = x; i >= 0; i--) {
-                            this.paint(i, y);
+                    break;
+                case "left":
+                    if (this.isNear(x, 0)) {
+                        if (x > 0) {
+                            for (let i = x; i >= 0; i--) {
+                                this.paint(i, y);
+                            }
                         }
+                        return true;
                     }
-                    return true;
-                }
-                break;
-            case "right":
-                if (this.isNear(x, this.size)) {
-                    if (x < this.size) {
-                        for (let i = x; i <= this.size; i++) {
-                            this.paint(i, y);
+                    break;
+                case "right":
+                    if (this.isNear(x, this.size)) {
+                        if (x < this.size) {
+                            for (let i = x; i <= this.size; i++) {
+                                this.paint(i, y);
+                            }
                         }
+                        return true;
                     }
-                    return true;
-                }
-                break;
-            case "bottom":
-                if (this.isNear(y, this.size)) {
-                    if (y < this.size) {
-                        for (let i = y; i <= this.size; i++) {
-                            this.paint(x, i);
+                    break;
+                case "bottom":
+                    if (this.isNear(y, this.size)) {
+                        if (y < this.size) {
+                            for (let i = y; i <= this.size; i++) {
+                                this.paint(x, i);
+                            }
                         }
+                        return true;
                     }
-                    return true;
-                }
-                break;
+                    break;
+            }
         }
 
         return false;
-    }
-
-    _paintEnd() {
-        switch (this.end) {
-            case "top":
-                for (let i = 0; i < this.size; i++) {
-                    this.paint(i, 0, this.endColor, this.bitmapBackground, 4);
-                }
-                break;
-            case "left":
-                for (let i = 0; i < this.size; i++) {
-                    this.paint(0, i, this.endColor, this.bitmapBackground, 4);
-                }
-                break;
-            case "right":
-                for (let i = 0; i < this.size; i++) {
-                    this.paint(this.size - 4, i, this.endColor, this.bitmapBackground, 4);
-                }
-                break;
-            case "bottom":
-                for (let i = 0; i < this.size; i++) {
-                    this.paint(i, this.size - 4, this.endColor, this.bitmapBackground, 4);
-                }
-                break;
-        }
     }
 
     destroy() {
