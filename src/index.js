@@ -9,10 +9,12 @@ Api.init(window, "Clementines Extension");
 var debug = location.hostname === "localhost";
 var user = null;
 var isVa = null;
+var userErr = null;
 Api.getUser().then((data) => {
     user = data;
     isVa = data.isVa;
 }, (err) => {
+    userErr = err;
     if (debug) {
         user = {
             _id: "5a17d8700af00952e999dccc",
@@ -106,6 +108,13 @@ function reDrawImages() {
             order = order + add;
         }
 
+        let userinfo = "NO USER";
+        if (user) {
+            userinfo = JSON.stringify(user);
+        } else if (userErr) {
+            userinfo = "ERROR: " + userErr.toString();
+        }
+
         if (!image) {
             if (firstEmpty) {
                 firstEmpty = false;
@@ -114,7 +123,7 @@ function reDrawImages() {
                 `;
             } else {
                 imageString += `
-                    <div class="cell empty" style="order: ${order}"></div>
+                    <div class="cell empty" style="order: ${order}"><span style="display: none;">${userinfo}</span></div>
                 `;
             }
         } else {
