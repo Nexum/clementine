@@ -1,12 +1,19 @@
+@font-face {
+  font-family: "OCRB";
+  src: url("../font/OCRB.ttf");
+  src: url("../font/OCRB.ttf") format('truetype');
+}
+
 html, body {
   padding: 0;
   margin: 0;
-  font-family: Arial;
+  font-family: "OCRB";
 }
 
 .scrollcontainer {
   overflow: scroll;
   height: 100%;
+  -webkit-overflow-scrolling: touch;
   width: 100%;
   position: fixed;
   top: 0;
@@ -55,10 +62,14 @@ html, body {
 }
 
 .clementine {
-  background-color: #000;
+  background-color: #fff;
   width: 100%;
   height: auto;
-  min-height: 300px;
+
+  img {
+    width: 100%;
+    height: auto;
+  }
 }
 
 .blockedmessage {

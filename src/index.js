@@ -23,8 +23,8 @@ function setLastImage(image, lastIndex) {
 
     if (!lastImage) {
         start = {
-            x: 20,
-            y: 0
+            x: 110,
+            y: 128
         };
         end = "left";
     } else {
@@ -129,7 +129,7 @@ function reDrawImages() {
             if (firstEmpty) {
                 firstEmpty = false;
                 imageString += `
-                    <div class="cell new" onclick="addTile()" style="order: ${order};"><span>+</span></div>
+                    <div class="cell new" onclick="addTile()" style="order: ${order};"><img src="img/btn_draw.svg"></div>
                 `;
             } else {
                 imageString += `
