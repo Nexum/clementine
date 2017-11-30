@@ -18,7 +18,7 @@ let config = {
                 query: {
                     presets: ['env']
                 },
-                exclude: /node_modules|templates/
+                exclude: /templates/
             }
         ]
     },

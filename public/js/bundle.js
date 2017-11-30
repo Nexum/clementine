@@ -291,6 +291,7 @@ var jQuery = __webpack_require__(3);
 var CanvasGame = __webpack_require__(4);
 var MY_ID = __webpack_require__(8)();
 var apiClass = __webpack_require__(11);
+
 var Api = new apiClass();
 Api.init(window, "Clementines Extension");
 

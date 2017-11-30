@@ -2,6 +2,7 @@ const jQuery = require("jquery");
 const CanvasGame = require("lib/canvasgame");
 const MY_ID = require("uuid/v1")();
 const apiClass = require("adventskalender-js-api");
+
 var Api = new apiClass();
 Api.init(window, "Clementines Extension");
 
